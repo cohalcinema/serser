@@ -1,0 +1,551 @@
+[
+    {
+        "tit": "Lanterns",
+        "wal": "",
+        "wal1": "https://image.tmdb.org/t/p/original/moA5NNpOsSeQ2gNkOBgbMeNOl3d.jpg",
+        "wal2": "https://image.tmdb.org/t/p/original/jGbkPfu96s7cfJDN03hGnH2z2iW.jpg",
+        "wal3": "https://image.tmdb.org/t/p/original/w5GVI7FvV4zbio4nRUqHTnK5B0G.jpg",
+        "wal4": "https://image.tmdb.org/t/p/original/cMbQdNmBeNCVCAqBN1hvih5uMrz.jpg",
+        "post1": ""
+    },
+    {
+        "tit": "Spider-Noir",
+        "wal": "",
+        "wal1": "https://image.tmdb.org/t/p/original/kUuecJkTMuZmARpj9dgWMsPVJSf.jpg",
+        "wal2": "https://image.tmdb.org/t/p/original/5jmYxJmn7IG7ggAi1GBvmIFPVJ.jpg",
+        "wal3": "https://image.tmdb.org/t/p/original/qfbVc3kuVqBEgxpon1nBRF1t9KT.jpg",
+        "wal4": "https://image.tmdb.org/t/p/original/rZTn8zwb6fUuN0eRTEV3dodvYx2.jpg",
+        "post1": ""
+    },
+    {
+        "tit": "Star Wars: Maul - Shadow Lord",
+        "wal": "",
+        "wal1": "https://image.tmdb.org/t/p/original/9Dtd94JVSPt06YFT8Zep14tdSog.jpg",
+        "wal2": "https://image.tmdb.org/t/p/original/rJZCkRrYdWpgMbnlN2idocbO45y.jpg",
+        "wal3": "https://image.tmdb.org/t/p/original/9w1QQ32f1OirqeKgZExoqMPqszp.jpg",
+        "wal4": "https://image.tmdb.org/t/p/original/h5TGdMCaEdRjDxu1uQzzEdyxXtR.jpg",
+        "post1": ""
+    },
+    {
+        "tit": "Wonder Man",
+        "wal": "",
+        "wal1": "https://image.tmdb.org/t/p/original/vqPfhEIRMVnlxFDs5cpzO9DQHQl.jpg",
+        "wal2": "https://image.tmdb.org/t/p/original/3xdtP9D78ZFFBwIBXf3XWWQiqMB.jpg",
+        "wal3": "https://image.tmdb.org/t/p/original/oP2kNQWkwCvpnOyf7UsgDwdD65N.jpg",
+        "wal4": "https://image.tmdb.org/t/p/original/rNNBanPBe3unbJOAVtWvAHmORr5.jpg",
+        "post1": ""
+    },
+    {
+        "tit": "A Knight of the Seven Kingdoms",
+        "wal": "",
+        "wal1": "https://image.tmdb.org/t/p/original/d5ohMxewL3L8CSt1AR897StlAe5.jpg",
+        "wal2": "https://image.tmdb.org/t/p/original/9QFLpimeYCVv4FmCZ7BAzFjHBl2.jpg",
+        "wal3": "https://image.tmdb.org/t/p/original/pkIpN2e6mjU22OXtfTw2y10XtIw.jpg",
+        "wal4": "https://image.tmdb.org/t/p/original/myo5xxTb28qGneZFuN9VkOtHsXu.jpg",
+        "post1": ""
+    },
+    {
+        "tit": "Anatomía de un Instante",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Last Samurai Standing",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Pluribus",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Animal",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Marvel Zombies",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Alien: Earth",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Star Wars: Tales of the Underworld",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "El Eternauta",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "The Studio",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Daredevil: Born Again",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Your Friendly Neighborhood Spider-Man",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "American Primeval",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "1992",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Creature Commandos",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Star Wars: Skeleton Crew",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Uzumaki",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Agatha All Along",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Batman: Caped Crusader",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Atasco",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Star Wars: Tales of the Empire",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Fallout",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Sugar",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Muertos S.L.",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "X-Men '97",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Hay Algo En El Bosque",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Blue Eyes Samurai",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "The Continental: From the World of John Wick",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Ahsoka",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "The Muppets Mayhem",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Tú También Lo Harías",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Wednesday",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Star Wars: Tales of the Jedi",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "El Encargado",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Guillermo del Toro's Cabinet of Curiosities",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Cars on the Road",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "House of the Dragon",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "She-Hulk: Attorney at Law",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "I Am Groot",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "The Bear",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Obi-Wan Kenobi",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Moon Knight",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Parallels",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Severance",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Entrevías",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Peacemaker",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Señor, Dame Paciencia",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "The Book of Boba Fett",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Hawkeye",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Jaguar",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Squid Game",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "What If...?",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Loki",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "WandaVision",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "30 Monedas",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Antidisturbios",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "HIT",
+        "wal": "",
+        "wal1": "",
+        "wal2": "",
+        "wal3": "",
+        "wal4": "",
+        "post1": ""
+    }
+]

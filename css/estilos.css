@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@300;400;600&display=swap');
+
+:root {
+    --bg:         #14181C;
+    --bg-card:    #1f252b;
+    --bg-hover:   #2b353e;
+    --accent:     #00E054;
+    --accent-h:   #2bdf70;
+    --text:       #e8e8e8;
+    --text-muted: #aaaaaa;
+    --border:     #555555;
+    --radius:     12px;
+    --tr:         all 0.2s ease;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg);
+    font-family: 'Nunito', 'Trebuchet MS', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* ── LOGO ─────────────────────────────── */
+.logo {
+    width: 140px; height: 140px; border-radius: 50%;
+    margin: 2.5rem auto 1rem; display: block;
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 20px rgba(192,160,96,.3);
+}
+
+/* ── TÍTULO SITIO ─────────────────────── */
+h1.site-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem; text-align: center;
+    letter-spacing: .3em; color: var(--accent);
+    text-shadow: 0 2px 10px rgba(192,160,96,.3);
+    margin-bottom: .5rem;
+}
+
+/* ── MENÚ PRINCIPAL ───────────────────── */
+.menu-wrap {
+    width: 640px; max-width: 92%;
+    margin: 1.5rem auto 2.5rem;
+    display: flex; flex-direction: column; gap: 1.8rem;
+}
+.menu-seccion-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; letter-spacing: .18em;
+    color: var(--text-muted);
+    margin-bottom: .7rem;
+    padding-bottom: .4rem;
+    border-bottom: 1px solid var(--border);
+}
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+    gap: .9rem;
+}
+.menu-card {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: .4rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1rem;
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 700; font-size: .95rem; letter-spacing: .03em;
+    text-align: center;
+    transition: var(--tr);
+}
+.menu-card .menu-icono { font-size: 1.7rem; }
+.menu-card:hover {
+    background: var(--bg-hover); color: var(--accent);
+    border-color: var(--accent); scale: .97;
+}
+@media (max-width: 640px) {
+    .menu-card { padding: 1.2rem .8rem; font-size: .85rem; }
+}
+
+/* ── BOTONES MENÚ (legado, aún usado por otras páginas) ── */
+.btn-menu { width: 50%; margin: 1rem auto; }
+
+a {
+    display: block; width: 100%; text-align: center;
+    color: var(--text); background: var(--bg-card);
+    text-decoration: none; padding: 2.5rem 2rem;
+    border-radius: var(--radius); font-size: 1.1rem;
+    font-weight: 600; letter-spacing: .05em;
+    transition: var(--tr); border: 1px solid var(--border);
+}
+a:hover {
+    background: var(--bg-hover); color: var(--accent);
+    border-color: var(--accent); scale: .97;
+}
+
+/* ── BOTÓN TÍTULO ─────────────────────── */
+.btn-titulo { width: 900px; max-width: 90%; margin: 1.5rem auto .5rem; }
+.btn-titulo a {
+    padding: 1rem 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; letter-spacing: .15em;
+}
+
+/* ── BOTÓN VOLVER ─────────────────────── */
+.btn-volver { width: 120px; margin: 1.5rem auto; }
+.btn-volver a { padding: .8rem; font-size: .9rem; }
+
+/* ── BARRA NAVEGACIÓN (décadas / años) ── */
+.barra-nav-container {
+    width: 900px; max-width: 90%;
+    margin: .5rem auto 1rem;
+    display: flex; align-items: center; gap: 8px; overflow: hidden;
+}
+.barra-nav-scroll {
+    display: flex; gap: 8px;
+    overflow-x: auto; scrollbar-width: none; flex: 1;
+}
+.barra-nav-scroll::-webkit-scrollbar { display: none; }
+.barra-nav-scroll button {
+    padding: .6rem 1rem; font-size: .9rem;
+    white-space: nowrap; flex-shrink: 0;
+    background: var(--bg-card); color: var(--text);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    font-weight: 600; transition: var(--tr);
+}
+.barra-nav-scroll button:hover {
+    background: var(--bg-hover); color: var(--accent); border-color: var(--accent);
+}
+.barra-nav-scroll button.activo {
+    background: var(--accent); color: #1a1a1a;
+    border-color: var(--accent); font-weight: 700;
+}
+.scroll-btn {
+    background: var(--bg-card); color: var(--text);
+    border: 1px solid var(--border); padding: .6rem .8rem;
+    border-radius: var(--radius); cursor: pointer;
+    transition: var(--tr); font-size: .9rem; flex-shrink: 0;
+}
+.scroll-btn:hover { background: var(--bg-hover); color: var(--accent); border-color: var(--accent); }
+
+/* ── GRID DE PÓSTERS ──────────────────── */
+.posters {
+    width: 900px; max-width: 100%;
+    margin: 0 auto 1rem;
+    display: flex; flex-wrap: wrap;
+    justify-content: center; gap: 1rem;
+    border-top: 2px solid var(--border);
+    border-bottom: 2px solid var(--border);
+    padding: 1rem 0; border-radius: 10px;
+    min-height: 120px;
+}
+.poster-wrap {
+    width: 17%; position: relative; cursor: pointer;
+    border-radius: 10px; overflow: hidden;
+    aspect-ratio: 2/3;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.20);
+    transition: var(--tr);
+    background: var(--bg-card);
+}
+.poster-wrap:hover { box-shadow: 0 0 0 2px var(--accent); }
+.poster-skeleton {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-hover) 50%, var(--bg-card) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 10px;
+}
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+.poster-wrap img {
+    width: 100%; height: 100%; display: block;
+    object-fit: cover; position: relative; z-index: 1;
+}
+
+/* ── POSTER EN PELICULA.HTML ─────────── */
+.peli-poster {
+    width: 240px; position: relative; cursor: pointer;
+    border-radius: 10px; overflow: hidden;
+    aspect-ratio: 2/3;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.20);
+    transition: var(--tr);
+    background: var(--bg-card);
+    flex-shrink: 0;
+    display: block;
+}
+.peli-poster:hover {
+    box-shadow: 0 0 0 2px var(--accent);
+}
+.peli-poster img {
+    width: 100%; height: 100%; display: block;
+    object-fit: cover; position: relative; z-index: 1;
+}
+.peli-top {
+    width: 900px; max-width: 90%;
+    margin: 1rem auto 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1.2rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.wal-titulo {
+    width: 900px; max-width: 90%;
+    margin: 2rem auto .8rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: .12em;
+    color: var(--accent);
+    padding-bottom: .4rem;
+    border-bottom: 1px solid var(--border);
+}
+
+/* ── GRID DE POSTERS ALTERNATIVOS (pelicula.html) ── */
+.posters-alt {
+    width: 900px; max-width: 90%;
+    margin: 2rem auto 1rem;
+}
+.posters-alt-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: .12em;
+    color: var(--accent);
+    margin-bottom: .8rem;
+    padding-bottom: .4rem;
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+}
+.posters-alt .posters { width: 100%; }
+.posters-alt .poster-wrap { width: 30%; }
+@media (max-width: 768px) {
+    .posters-alt .poster-wrap { width: 30%; }
+}
+
+/* ── TARJETAS DE TEXTO (series sin poster, punt 1-4) ── */
+.tarjetas-texto {
+    width: 900px; max-width: 100%;
+    margin: 0 auto 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .8rem;
+    border-top: 2px solid var(--border);
+    border-bottom: 2px solid var(--border);
+    padding: 1rem 0;
+    border-radius: 10px;
+}
+.tarjeta-texto {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    cursor: pointer;
+    transition: var(--tr);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: .25rem;
+    min-height: 70px;
+}
+.tarjeta-texto:hover {
+    box-shadow: 0 0 0 2px var(--accent);
+    background: var(--bg-hover);
+}
+.tarjeta-texto .tt-tit {
+    font-weight: 700;
+    font-size: .95rem;
+    line-height: 1.25;
+}
+.tarjeta-texto .tt-anyo {
+    font-size: .78rem;
+    color: var(--text-muted);
+}
+@media (max-width: 768px) {
+    .tarjetas-texto { width: 90%; }
+    .tarjeta-texto { padding: .8rem .9rem; min-height: 60px; }
+    .tarjeta-texto .tt-tit { font-size: .88rem; }
+}
+
+/* ── MENSAJE VACÍO ────────────────────── */
+.vacio {
+    width: 100%; text-align: center;
+    padding: 3rem; color: var(--text-muted); font-size: .95rem;
+    align-self: center;
+}
+
+/* ── BLOQUES ──────────────────────────── */
+.bloque {
+    width: 900px; max-width: 90%;
+    margin: 0 auto 2.5rem;
+}
+.bloque-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: .12em;
+    color: var(--accent);
+    margin-bottom: .8rem;
+    padding-bottom: .4rem;
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+}
+.bloque .posters {
+    width: 100%;
+    margin: 0;
+}
+
+/* ── BARRA DÉCADAS (secundaria) ───────── */
+.barra-decadas-wrap {
+    width: 900px; max-width: 90%;
+    margin: 0 auto .6rem;
+    display: flex; gap: .4rem; flex-wrap: wrap;
+}
+.barra-decadas-wrap button {
+    background: var(--bg-card); border: 1px solid var(--border);
+    color: var(--text-muted); border-radius: 8px;
+    padding: .35rem .8rem; font-size: .82rem;
+    font-family: 'Nunito', sans-serif; font-weight: 700;
+    cursor: pointer; transition: var(--tr);
+}
+.barra-decadas-wrap button:hover { border-color: var(--accent); color: var(--text); }
+.barra-decadas-wrap button.activo { border-color: var(--accent); color: var(--accent); background: rgba(0,224,84,.08); }
+
+/* ── MODAL ────────────────────────────── */
+.modal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.88);
+    justify-content: center; align-items: center; z-index: 1000;
+}
+.modal-content { text-align: center; position: relative; max-width: 90vw; }
+.modal-content > #modal-img {
+    max-width: 85vw; max-height: 80vh;
+    animation: zoomIn .3s ease; touch-action: pan-y;
+    border-radius: var(--radius);
+    box-shadow: 0 0 0 2px rgb(45, 45, 45);
+    cursor: pointer;
+    display: block;
+}
+.modal-nav { display: none !important; }
+
+/* ── DOTS ─────────────────────────────── */
+/* .dots { display: flex; justify-content: center; gap: 6px; margin-top: .6rem; }
+.dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border); transition: var(--tr); cursor: pointer;
+}
+.dot.active { background: var(--accent); width: 18px; border-radius: 3px; } */
+
+/* ── ANIMACIONES ──────────────────────── */
+@keyframes zoomIn { from { transform: scale(.88); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes slideR { from { opacity: .4; transform: translateX(1.2rem); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideL { from { opacity: .4; transform: translateX(-1.2rem); } to { opacity: 1; transform: translateX(0); } }
+
+/* ── RESPONSIVE ───────────────────────── */
+@media (max-width: 768px) {
+    .btn-menu { width: 80%; }
+    .btn-titulo, .barra-nav-container, .posters { width: 90%; }
+    .btn-volver { width: 30%; }
+    .poster-wrap { width: 30%; }
+    .peli-top { flex-direction: column; align-items: center; width: 90%; }
+    .peli-poster { width: 55vw; }
+
+    .modal-content { display: flex; flex-direction: column; align-items: center; }
+    .modal-content > #modal-img { max-width: 88vw; max-height: 72vh; }
+
+    /* Wals en columna */
+    .wal-grid { grid-template-columns: 1fr !important; width: 90% !important; }
+
+    /* Modal wal: botones abajo */
+    .wal-modal-nav { position: static; transform: none; margin-top: .8rem;
+        display: flex; justify-content: center; gap: 2rem; }
+    .wal-modal-inner { display: flex; flex-direction: column; align-items: center; }
+}

@@ -1,0 +1,182 @@
+[
+  {
+    "tit": "A Christmas Carol",
+    "anyo": 2019,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/tKW48tnZKaHLBIxxgoAf9BIpyRv.jpg"
+  },
+  {
+    "tit": "Merlí. Sapere Aude",
+    "anyo": 2019,
+    "punt": 5,
+    "img": "https://image.tmdb.org/t/p/original/bnL7Y7P0jzLIGNsSi2K0AhFU2WB.jpg"
+  },
+  {
+    "tit": "Harley Quinn",
+    "anyo": 2019,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/53MDy9VFc1r2lxDSxFMwrH79CKQ.jpg"
+  },
+  {
+    "tit": "The Mandalorian",
+    "anyo": 2019,
+    "punt": 9,
+    "img": "https://image.tmdb.org/t/p/original/sWgBv7LV2PRoQgkxwlibdGXKz1S.jpg"
+  },
+  {
+    "tit": "Watchmen",
+    "anyo": 2019,
+    "punt": 7,
+    "img": "https://image.tmdb.org/t/p/original/m8rWq3j73ZGhDuSCZWMMoE9ePH1.jpg"
+  },
+  {
+    "tit": "Primal",
+    "anyo": 2019,
+    "punt": 9,
+    "img": "https://image.tmdb.org/t/p/original/3dynuFgHItI1CxBeMSq6wvfgCNS.jpg"
+  },
+  {
+    "tit": "The Boys",
+    "anyo": 2019,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/9angmqFkb4UOmrRCPyjmQ3BfJHt.jpg"
+  },
+  {
+    "tit": "El Pueblo",
+    "anyo": 2019,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/eaQtHXZzdjg4xQPBJY84jT2eenD.jpg"
+  },
+  {
+    "tit": "45 Revoluciones",
+    "anyo": 2019,
+    "punt": 6,
+    "img": "https://image.tmdb.org/t/p/original/dkWii81Ru6NCvWPInbNy1sTZ293.jpg"
+  },
+  {
+    "tit": "Matadero",
+    "anyo": 2019,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/r0iCJ1DIfILeSDjxqxF453SSGSh.jpg"
+  },
+  {
+    "tit": "Félix",
+    "anyo": 2018,
+    "punt": 5,
+    "img": "https://image.tmdb.org/t/p/original/x7K3Tpm7AKMuGeEI6J64yP0pMRR.jpg"
+  },
+  {
+    "tit": "Estoy vivo",
+    "anyo": 2017,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/gHUJlJxBYQIgqS8rMeqgLPFR4sy.jpg"
+  },
+  {
+    "tit": "Marvel's The Defenders",
+    "anyo": 2017,
+    "punt": 6,
+    "img": "https://image.tmdb.org/t/p/original/cGNPb7MiagRApigu3DaIca67XDi.jpg"
+  },
+  {
+    "tit": "A Series of Unfortunate Events",
+    "anyo": 2017,
+    "punt": 7,
+    "img": "https://image.tmdb.org/t/p/original/8BwLL7mBBwe8Wjb5heHLM6QiWCx.jpg"
+  },
+  {
+    "tit": "Stranger Things",
+    "anyo": 2016,
+    "punt": 6,
+    "img": "https://image.tmdb.org/t/p/original/uKYUR8GPkKRCksczYDJb3pwZauo.jpg"
+  },
+  {
+    "tit": "And Then There Were None",
+    "anyo": 2015,
+    "punt": 7,
+    "img": "https://image.tmdb.org/t/p/original/xbcGTnlxszacXztaOdY2hu5TI7K.jpg"
+  },
+  {
+    "tit": "Merlí",
+    "anyo": 2015,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/eBzpj7PxyeRFCIYHQjB5kDnhX4a.jpg"
+  },
+  {
+    "tit": "Olmos y Robles",
+    "anyo": 2015,
+    "punt": 5,
+    "img": "https://image.tmdb.org/t/p/original/ySjcYa7q794cMNhfrbskHr1H75u.jpg"
+  },
+  {
+    "tit": "Marvel's Daredevil",
+    "anyo": 2015,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/hQQ9an4J1m3rQldfYRalxWNFWAD.jpg"
+  },
+  {
+    "tit": "The Ministry of Time",
+    "anyo": 2015,
+    "punt": 10,
+    "img": "https://image.tmdb.org/t/p/original/5tGCRUSlBowLqctgA9s46wC0BCZ.jpg"
+  },
+  {
+    "tit": "Better Call Saul",
+    "anyo": 2015,
+    "punt": 10,
+    "img": "https://image.tmdb.org/t/p/original/m5WbvRME8Pl29U2Gop0gHA3vvYH.jpg"
+  },
+  {
+    "tit": "Over the Garden Wall",
+    "anyo": 2014,
+    "punt": 10,
+    "img": "https://image.tmdb.org/t/p/original/m3lU8n7WxzMecxKZcqhq5y5ESy.jpg"
+  },
+  {
+    "tit": "Star Wars Rebels",
+    "anyo": 2014,
+    "punt": 7,
+    "img": "https://image.tmdb.org/t/p/original/eLrScs6Bs26JMcS8hiZhf7YRROr.jpg"
+  },
+  {
+    "tit": "Gotham",
+    "anyo": 2014,
+    "punt": 7,
+    "img": "https://image.tmdb.org/t/p/original/2knM0D9yGrnUgECWfj6OSJl4Poa.jpg"
+  },
+  {
+    "tit": "Fargo",
+    "anyo": 2014,
+    "punt": 10,
+    "img": "https://image.tmdb.org/t/p/original/yxdQwCGPxHIZOBXIozMqXFiJd7k.jpg"
+  },
+  {
+    "tit": "Peaky Blinders",
+    "anyo": 2013,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/yjX3ocrYTBUj3v5crEQgm03F4Zu.jpg"
+  },
+  {
+    "tit": "Game of Thrones",
+    "anyo": 2011,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/1XS1oqL89opfnbLl8WnZY1O1uJx.jpg"
+  },
+  {
+    "tit": "Polseres Vermelles",
+    "anyo": 2011,
+    "punt": 7,
+    "img": "https://image.tmdb.org/t/p/original/8fnahsocNjCQZLww0x4uPyLwOIc.jpg"
+  },
+  {
+    "tit": "The Avengers: Earth's Mightiest Heroes",
+    "anyo": 2010,
+    "punt": 7,
+    "img": "https://image.tmdb.org/t/p/original/eyUeOUefufuBCeih3lOi2NkFD9r.jpg"
+  },
+  {
+    "tit": "Los Protegidos",
+    "anyo": 2010,
+    "punt": 5,
+    "img": "https://image.tmdb.org/t/p/original/eXjMiMTWFvxJVbpopfzR8sUwtWn.jpg"
+  }
+]

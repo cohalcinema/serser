@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serie | Serser</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        /* ── Hero: el wal principal, más grande que el resto ── */
+        .wal-hero-wrap {
+            width: 900px; max-width: 90%;
+            margin: 1.5rem auto 1rem;
+        }
+        .wal-hero {
+            display: block; width: 100%; cursor: pointer;
+            border-radius: 12px; overflow: hidden;
+            aspect-ratio: 16/9;
+            box-shadow: 0 0 0 1px rgba(255,255,255,.20);
+            transition: var(--tr);
+        }
+        .wal-hero:hover { box-shadow: 0 0 0 2px var(--accent); }
+        .wal-hero img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+
+        /* ── Posters de temporadas (de json_tem) ── */
+        .tem-titulo {
+            width: 900px; max-width: 90%;
+            margin: 2rem auto .8rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem; letter-spacing: .12em;
+            color: var(--accent);
+            padding-bottom: .4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .tem-grid {
+            width: 900px; max-width: 90%;
+            margin: 0 auto 1rem;
+            display: flex; flex-wrap: wrap;
+            justify-content: center; gap: 1rem;
+        }
+        .tem-grid .poster-wrap { width: 17%; }
+        @media (max-width: 768px) {
+            .tem-grid .poster-wrap { width: 30%; }
+        }
+
+        /* ── Grid de visuals (wal1, wal2, ... cualquier cantidad) ── */
+        .wal-grid {
+            width: 900px; max-width: 90%;
+            margin: 0 auto 1rem;
+            display: flex; flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .wal-grid img {
+            width: calc(50% - .5rem); height: auto;
+            aspect-ratio: 16/9; object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 0 0 1px rgba(255,255,255,.15);
+            display: block; cursor: pointer;
+            transition: var(--tr);
+        }
+        .wal-grid img:hover { box-shadow: 0 0 0 2px var(--accent); }
+        .wal-vacio {
+            width: 900px; max-width: 90%;
+            margin: 2rem auto; text-align: center;
+            color: var(--text-muted); font-size: .95rem;
+        }
+        #wal-modal {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,.92);
+            justify-content: center; align-items: center;
+            z-index: 1000;
+        }
+        #wal-modal-img {
+            max-width: 90vw; max-height: 86vh;
+            border-radius: 10px;
+            box-shadow: 0 0 0 2px rgb(45,45,45);
+            animation: zoomIn .3s ease;
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .wal-grid img { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="btn-titulo">
+        <a href="#" id="link-back">← Volviendo…</a>
+    </div>
+
+    <div id="hero-container"></div>
+    <div id="tem-container"></div>
+    <div id="wal-container"></div>
+    <div id="posts-container"></div>
+
+    <div class="btn-volver">
+        <a href="#" id="link-back2">Volver</a>
+    </div>
+
+    <!-- Modal wals -->
+    <div id="wal-modal">
+        <img id="wal-modal-img" alt="">
+    </div>
+
+    <script>
+        const peli    = JSON.parse(sessionStorage.getItem('cinser_peli') || 'null');
+        const backUrl = sessionStorage.getItem('cinser_back') || 'index.html';
+
+        /* ── Título y vuelta ── */
+        document.getElementById('link-back').textContent  = peli ? `← ${peli.tit}` : '← Volver';
+        document.getElementById('link-back2').textContent = 'Volver';
+        document.getElementById('link-back').href  = backUrl;
+        document.getElementById('link-back2').href = backUrl;
+        document.title = peli ? `${peli.tit} | Serser` : 'Serie | Serser';
+
+        /* ── Modal wals ── */
+        let walAllList = []; // todas las imágenes del modal (hero + temporadas + wal1-N + poster + post1-N)
+        let walIndex   = 0;
+        let _walTouchX = 0;
+
+        const walModal    = document.getElementById('wal-modal');
+        const walModalImg = document.getElementById('wal-modal-img');
+
+        function openWalModal(i) {
+            walIndex = i;
+            walModal.style.display = 'flex';
+            _updateWal('zoom');
+        }
+        function closeWalModal() { walModal.style.display = 'none'; }
+
+        function _updateWal(dir) {
+            const anim = dir === 'right' ? 'slideR' : dir === 'left' ? 'slideL' : 'zoomIn';
+            walModalImg.src = walAllList[walIndex];
+            walModalImg.style.animation = 'none';
+            walModalImg.offsetHeight;
+            walModalImg.style.animation = `${anim} 0.35s ease`;
+        }
+
+        walModal.addEventListener('click',    e => { if (e.target === walModal) closeWalModal(); });
+        walModalImg.addEventListener('click', closeWalModal);
+
+        walModal.addEventListener('wheel', e => {
+            e.preventDefault();
+            if (e.deltaY > 0 || e.deltaX > 0) { walIndex = (walIndex + 1) % walAllList.length; _updateWal('right'); }
+            else { walIndex = (walIndex - 1 + walAllList.length) % walAllList.length; _updateWal('left'); }
+        }, { passive: false });
+
+        walModalImg.addEventListener('touchstart', e => { _walTouchX = e.touches[0].clientX; });
+        walModalImg.addEventListener('touchend', e => {
+            const d = _walTouchX - e.changedTouches[0].clientX;
+            if (d > 50)  { walIndex = (walIndex + 1) % walAllList.length; _updateWal('right'); }
+            if (d < -50) { walIndex = (walIndex - 1 + walAllList.length) % walAllList.length; _updateWal('left'); }
+        });
+
+        document.addEventListener('keydown', e => {
+            if (walModal.style.display !== 'flex') return;
+            if (e.key === 'ArrowRight') { walIndex = (walIndex + 1) % walAllList.length; _updateWal('right'); }
+            if (e.key === 'ArrowLeft')  { walIndex = (walIndex - 1 + walAllList.length) % walAllList.length; _updateWal('left'); }
+            if (e.key === 'Escape') closeWalModal();
+        });
+
+        /* ── Cargar desde json_wal y json_tem ── */
+        async function loadWals() {
+            if (!peli) return;
+            const decade = String(Math.floor(peli.anyo / 10) * 10);
+
+            let walData = null;
+            try {
+                const res  = await fetch(`json_wal/${decade}.json`);
+                const list = await res.json();
+                walData = list.find(e => e.tit === peli.tit) || null;
+            } catch (e) { console.warn('json_wal error:', e); }
+
+            let temData = null;
+            try {
+                const res  = await fetch(`json_tem/${decade}.json`);
+                const list = await res.json();
+                temData = list.find(e => e.tit === peli.tit) || null;
+            } catch (e) { console.warn('json_tem error:', e); }
+
+            const poster = peli.img || '';
+            const hero   = walData ? (walData.wal || '') : '';
+
+            // temp1, temp2, ... (json_tem no cambia de formato)
+            const temKeys = temData
+                ? Object.keys(temData)
+                    .filter(k => /^temp\d+$/.test(k))
+                    .sort((a, b) => parseInt(a.slice(4)) - parseInt(b.slice(4)))
+                : [];
+            const temList = temKeys.map(k => temData[k] || '').filter(v => v);
+
+            // wal1, wal2, ... cualquier cantidad, en orden numérico
+            const walKeys = walData
+                ? Object.keys(walData)
+                    .filter(k => /^wal\d+$/.test(k))
+                    .sort((a, b) => parseInt(a.slice(3)) - parseInt(b.slice(3)))
+                : [];
+            const walSmall = walKeys.map(k => walData[k] || '').filter(v => v);
+
+            // post1, post2, ... cualquier cantidad, en orden numérico
+            const postKeys = walData
+                ? Object.keys(walData)
+                    .filter(k => /^post\d+$/.test(k))
+                    .sort((a, b) => parseInt(a.slice(4)) - parseInt(b.slice(4)))
+                : [];
+            const posts = postKeys.map(k => walData[k] || '').filter(v => v);
+
+            // walAllList: [hero?, ...temList, ...walSmall, poster?, ...posts] — sólo los que tengan src
+            walAllList = [hero, ...temList, ...walSmall, poster, ...posts].filter(v => v);
+
+            const heroContainer  = document.getElementById('hero-container');
+            const temContainer   = document.getElementById('tem-container');
+            const walContainer   = document.getElementById('wal-container');
+            const postsContainer = document.getElementById('posts-container');
+
+            /* ── Hero (lo primero que se ve, más grande) ── */
+            if (hero) {
+                const heroWrap = document.createElement('div');
+                heroWrap.className = 'wal-hero-wrap';
+                const heroBox = document.createElement('div');
+                heroBox.className = 'wal-hero';
+                const heroImg = document.createElement('img');
+                heroImg.src = hero;
+                heroImg.alt = peli.tit || '';
+                heroImg.loading = 'lazy';
+                heroBox.addEventListener('click', () => openWalModal(0));
+                heroBox.appendChild(heroImg);
+                heroWrap.appendChild(heroBox);
+                heroContainer.appendChild(heroWrap);
+            }
+
+            /* ── Grid de temporadas (temp1-N) ── */
+            if (temList.length) {
+                const temTitulo = document.createElement('div');
+                temTitulo.className = 'tem-titulo';
+                temTitulo.textContent = 'Temporadas';
+                temContainer.appendChild(temTitulo);
+
+                const grid = document.createElement('div');
+                grid.className = 'tem-grid';
+                temList.forEach((src, i) => {
+                    const wrap = document.createElement('div');
+                    wrap.className = 'poster-wrap';
+
+                    const skeleton = document.createElement('div');
+                    skeleton.className = 'poster-skeleton';
+
+                    const img = document.createElement('img');
+                    img.alt = `${peli.tit || ''} - Temporada ${i + 1}`;
+                    img.loading = 'lazy';
+                    img.addEventListener('load',  () => skeleton.style.display = 'none');
+                    img.addEventListener('error', () => { skeleton.style.display = 'none'; img.style.display = 'none'; });
+                    img.src = src;
+
+                    const modalIdx = (hero ? 1 : 0) + i;
+                    wrap.addEventListener('click', () => openWalModal(modalIdx));
+
+                    wrap.appendChild(skeleton);
+                    wrap.appendChild(img);
+                    grid.appendChild(wrap);
+                });
+                temContainer.appendChild(grid);
+            }
+
+            /* ── Grid de visuals (wal1, wal2, ...) ── */
+            const walTitulo = document.createElement('div');
+            walTitulo.className = 'wal-titulo';
+            walTitulo.textContent = 'Visuals';
+
+            if (walSmall.length) {
+                walContainer.appendChild(walTitulo);
+                const grid = document.createElement('div');
+                grid.className = 'wal-grid';
+                walSmall.forEach((src, i) => {
+                    const img = document.createElement('img');
+                    img.src = src; img.loading = 'lazy';
+                    const modalIdx = (hero ? 1 : 0) + temList.length + i;
+                    img.addEventListener('click', () => openWalModal(modalIdx));
+                    grid.appendChild(img);
+                });
+                walContainer.appendChild(grid);
+            } else {
+                walContainer.appendChild(walTitulo);
+                const p = document.createElement('p');
+                p.className = 'wal-vacio';
+                p.textContent = 'No hay planos añadidos para esta serie.';
+                walContainer.appendChild(p);
+            }
+
+            /* ── Grid de posters (poster original + post1, post2, ...) ── */
+            const altWrap = document.createElement('div');
+            altWrap.className = 'posters-alt';
+
+            const altTitulo = document.createElement('div');
+            altTitulo.className = 'posters-alt-titulo';
+            altTitulo.textContent = 'Posters';
+            altWrap.appendChild(altTitulo);
+
+            if (poster || posts.length) {
+                const grid = document.createElement('div');
+                grid.className = 'posters';
+
+                const baseIdx = (hero ? 1 : 0) + temList.length + walSmall.length;
+                const items = [];
+                if (poster) items.push({ src: poster, modalIdx: baseIdx });
+                posts.forEach((src, i) => items.push({ src, modalIdx: baseIdx + (poster ? 1 : 0) + i }));
+
+                items.forEach(({ src, modalIdx }) => {
+                    const wrap = document.createElement('div');
+                    wrap.className = 'poster-wrap';
+
+                    const skeleton = document.createElement('div');
+                    skeleton.className = 'poster-skeleton';
+
+                    const img = document.createElement('img');
+                    img.alt = peli.tit || '';
+                    img.loading = 'lazy';
+                    img.addEventListener('load',  () => skeleton.style.display = 'none');
+                    img.addEventListener('error', () => { skeleton.style.display = 'none'; img.style.display = 'none'; });
+                    img.src = src;
+
+                    wrap.addEventListener('click', () => openWalModal(modalIdx));
+
+                    wrap.appendChild(skeleton);
+                    wrap.appendChild(img);
+                    grid.appendChild(wrap);
+                });
+                altWrap.appendChild(grid);
+            } else {
+                const p = document.createElement('p');
+                p.className = 'wal-vacio';
+                p.textContent = 'No hay posters alternativos para esta serie.';
+                altWrap.appendChild(p);
+            }
+
+            postsContainer.appendChild(altWrap);
+        }
+
+        loadWals();
+    </script>
+
+</body>
+</html>

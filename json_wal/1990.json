@@ -1,0 +1,38 @@
+[
+    {
+        "tit": "The New Batman Adventures",
+        "wal": "",
+        "wal1": "https://image.tmdb.org/t/p/original/ws6TubgXbfCtgkuqqfTtbAyDF7u.jpg",
+        "wal2": "https://image.tmdb.org/t/p/original/hhKRvU9do6Pz9W87PTKKJFu620j.jpg",
+        "wal3": "https://image.tmdb.org/t/p/original/1P2z1qEWq28biEYHpJllDYIAsse.jpg",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Superman: The Animated Series",
+        "wal": "",
+        "wal1": "https://image.tmdb.org/t/p/original/cgMbDcONuzcciEKLJP3L1mtaOb4.jpg",
+        "wal2": "https://image.tmdb.org/t/p/original/gbpo1iJK8Vt6J6qtRdECmYXglCV.jpg",
+        "wal3": "https://image.tmdb.org/t/p/original/u058fdiTbwnAWB4GMIhOl2Xgvtg.jpg",
+        "wal4": "",
+        "post1": ""
+    },
+    {
+        "tit": "Batman: The Animated Series",
+        "wal": "",
+        "wal1": "https://image.tmdb.org/t/p/original/jszr5nLTaK946h85MBl1K2dkvKN.jpg",
+        "wal2": "https://image.tmdb.org/t/p/original/r8j2FjMbYu5veAqXl4RBjNoDZFo.jpg",
+        "wal3": "https://image.tmdb.org/t/p/original/eTiCTGm3TKeFyhI7TZpB6jn4vlp.jpg",
+        "wal4": "https://image.tmdb.org/t/p/original/fbg0ZZu8RAVUZO4XxVOufWdQhXd.jpg",
+        "post1": ""
+    },
+    {
+        "tit": "Twin Peaks",
+        "wal": "",
+        "wal1": "https://image.tmdb.org/t/p/original/nKrl8qcpjTmWhkUg2SX84OdLBde.jpg",
+        "wal2": "https://image.tmdb.org/t/p/original/lKOFefsakcPxYOUkjkv6tXsLfP4.jpg",
+        "wal3": "https://image.tmdb.org/t/p/original/2IgvSmLai83bOMaA9CgAU6ecekT.jpg",
+        "wal4": "https://image.tmdb.org/t/p/original/cAIlOVfpGhQcD1b9GssiWQBZ18g.jpg",
+        "post1": ""
+    }
+]

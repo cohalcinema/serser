@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puntuación | Serser</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <div class="btn-titulo"><a href="index.html">⭐ Puntuación</a></div>
+
+    <div class="barra-nav-container">
+        <button class="scroll-btn left">&#11207;</button>
+        <div id="barra" class="barra-nav-scroll"></div>
+        <button class="scroll-btn right">&#11208;</button>
+    </div>
+
+    <div class="barra-decadas-wrap" id="barra-decadas"></div>
+
+    <div id="bloques"></div>
+
+    <div class="btn-volver"><a href="index.html">Menú</a></div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <img id="modal-img" alt="">
+        </div>
+    </div>
+
+    <script src="js/posters.js"></script>
+    <script>
+        const DECADAS      = ['2020','2010','2000','1990','1980'];
+        const PUNTUACIONES = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+        const DEFAULT_PUNT = 10;
+
+        let _todas      = [];
+        let _todasBajas = [];
+        let _puntActual = DEFAULT_PUNT;
+
+        function getPunt() {
+            const p = parseInt(new URLSearchParams(window.location.search).get('p'));
+            return PUNTUACIONES.includes(p) ? p : DEFAULT_PUNT;
+        }
+
+        function construirBarra(activa) {
+            const barra = document.getElementById('barra');
+            barra.innerHTML = '';
+            PUNTUACIONES.forEach(p => {
+                const btn = document.createElement('button');
+                btn.textContent = `⭐ ${p}`;
+                if (p === activa) btn.classList.add('activo');
+                btn.addEventListener('click', () => {
+                    _puntActual = p;
+                    history.pushState(null, '', `?p=${p}`);
+                    barra.querySelectorAll('button').forEach(b => b.classList.remove('activo'));
+                    btn.classList.add('activo');
+                    mostrar(_puntActual, _decadaActual);
+                });
+                barra.appendChild(btn);
+            });
+        }
+
+        let _decadaActual = 'todas';
+
+        function construirBarraDecadas() {
+            const wrap = document.getElementById('barra-decadas');
+            wrap.innerHTML = '';
+            const todas = document.createElement('button');
+            todas.textContent = 'Todas';
+            todas.classList.add('activo');
+            todas.addEventListener('click', () => selDecada('todas', todas));
+            wrap.appendChild(todas);
+
+            DECADAS.forEach(d => {
+                const btn = document.createElement('button');
+                btn.textContent = d + 's';
+                btn.addEventListener('click', () => selDecada(d, btn));
+                wrap.appendChild(btn);
+            });
+        }
+
+        function selDecada(d, btn) {
+            _decadaActual = d;
+            document.querySelectorAll('.barra-decadas-wrap button')
+                .forEach(b => b.classList.remove('activo'));
+            btn.classList.add('activo');
+            mostrar(_puntActual, _decadaActual);
+        }
+
+        function mostrar(punt, decada) {
+            const esBaja = punt <= 4;
+            let lista = (esBaja ? _todasBajas : _todas).filter(s => s.punt === punt);
+            if (decada !== 'todas') {
+                const d = parseInt(decada);
+                lista = lista.filter(s => Math.floor(s.anyo / 10) * 10 === d);
+            }
+            if (esBaja) {
+                renderBloquesTexto([{ titulo: `⭐ ${punt}`, lista }], 'bloques');
+            } else {
+                renderBloques([{ titulo: `⭐ ${punt}`, lista: shuffle(lista) }], 'bloques');
+            }
+        }
+
+        async function cargarTodo() {
+            const fetchesAltas = DECADAS.map(d =>
+                fetch(`json/${d}.json`).then(r => r.json()).catch(() => []));
+            const fetchesBajas = DECADAS.map(d =>
+                fetch(`json_bajas/${d}.json`).then(r => r.json()).catch(() => []));
+            _todas      = (await Promise.all(fetchesAltas)).flat();
+            _todasBajas = (await Promise.all(fetchesBajas)).flat();
+            _puntActual = getPunt();
+            construirBarra(_puntActual);
+            construirBarraDecadas();
+            mostrar(_puntActual, _decadaActual);
+        }
+
+        cargarTodo();
+    </script>
+</body>
+</html>

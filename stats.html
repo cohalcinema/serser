@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats | Serser</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        /* ── TARJETAS RESUMEN ─────────────────────── */
+        .stats-cards {
+            width: 900px; max-width: 90%;
+            margin: 1rem auto 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.2rem 1rem;
+            text-align: center;
+        }
+        .stat-card .num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.1rem;
+            color: var(--accent);
+            letter-spacing: .05em;
+            line-height: 1.1;
+        }
+        .stat-card .lbl {
+            font-size: .75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-top: .3rem;
+        }
+        .stat-card .sub {
+            font-size: .75rem;
+            color: var(--text-muted);
+            margin-top: .2rem;
+            min-height: 1em;
+        }
+
+        /* ── BARRAS ───────────────────────────────── */
+        .barchart {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: .55rem;
+        }
+        .barchart-row {
+            display: grid;
+            grid-template-columns: 55px 1fr 40px;
+            align-items: center;
+            gap: .7rem;
+        }
+        .barchart-row .bc-label {
+            font-size: .82rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-align: right;
+        }
+        .barchart-row .bc-track {
+            background: var(--bg);
+            border-radius: 6px;
+            height: 18px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .barchart-row .bc-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 6px 0 0 6px;
+            transition: width .6s ease;
+            width: 0;
+        }
+        .barchart-row .bc-val {
+            font-size: .8rem;
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .stats-vacio {
+            text-align: center; color: var(--text-muted);
+            padding: 2rem; font-size: .95rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats-cards { grid-template-columns: repeat(2, 1fr); width: 90%; }
+            .barchart-row { grid-template-columns: 42px 1fr 34px; gap: .5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="btn-titulo"><a href="index.html">📊 Stats</a></div>
+
+    <div class="stats-cards" id="cards"></div>
+
+    <div class="bloque">
+        <div class="bloque-titulo">Series por década</div>
+        <div class="barchart" id="chart-decadas"></div>
+    </div>
+
+    <div class="bloque">
+        <div class="bloque-titulo">Nota media por década</div>
+        <div class="barchart" id="chart-media-decada"></div>
+    </div>
+
+    <div class="bloque">
+        <div class="bloque-titulo">Distribución de puntuaciones</div>
+        <div class="barchart" id="chart-punts"></div>
+    </div>
+
+    <div class="btn-volver"><a href="index.html">Menú</a></div>
+
+    <script>
+        const DECADAS = ['1980','1990','2000','2010','2020'];
+
+        function crearCard(num, lbl, sub) {
+            const card = document.createElement('div');
+            card.className = 'stat-card';
+            card.innerHTML = `<div class="num">${num}</div><div class="lbl">${lbl}</div><div class="sub">${sub || ''}</div>`;
+            return card;
+        }
+
+        function crearBarra(label, valor, max, sufijo) {
+            const row = document.createElement('div');
+            row.className = 'barchart-row';
+            const pct = max > 0 ? Math.round((valor / max) * 100) : 0;
+            row.innerHTML = `
+                <div class="bc-label">${label}</div>
+                <div class="bc-track"><div class="bc-fill" style="width:0"></div></div>
+                <div class="bc-val">${valor}${sufijo || ''}</div>
+            `;
+            requestAnimationFrame(() => {
+                row.querySelector('.bc-fill').style.width = pct + '%';
+            });
+            return row;
+        }
+
+        async function cargarStats() {
+            const fetchesAltas = DECADAS.map(d =>
+                fetch(`json/${d}.json`).then(r => r.json()).catch(() => []));
+            const fetchesBajas = DECADAS.map(d =>
+                fetch(`json_bajas/${d}.json`).then(r => r.json()).catch(() => []));
+            const [porDecadaAltas, porDecadaBajas] = await Promise.all([
+                Promise.all(fetchesAltas),
+                Promise.all(fetchesBajas),
+            ]);
+            const todas = [...porDecadaAltas.flat(), ...porDecadaBajas.flat()];
+
+            const cardsWrap = document.getElementById('cards');
+
+            if (!todas.length) {
+                cardsWrap.innerHTML = '<p class="stats-vacio">Todavía no hay series para calcular estadísticas.</p>';
+                return;
+            }
+
+            /* ── Resumen ── */
+            const total     = todas.length;
+            const notaMedia = (todas.reduce((s, p) => s + (p.punt || 0), 0) / total);
+
+            // década con más series
+            const countDecada = {};
+            DECADAS.forEach(d => countDecada[d] = 0);
+            todas.forEach(p => {
+                const d = String(Math.floor(p.anyo / 10) * 10);
+                if (countDecada[d] === undefined) countDecada[d] = 0;
+                countDecada[d]++;
+            });
+            const decadaFav = Object.entries(countDecada).sort((a, b) => b[1] - a[1])[0];
+
+            // nota media por década
+            const sumaDecada = {};
+            DECADAS.forEach(d => sumaDecada[d] = { suma: 0, n: 0 });
+            todas.forEach(p => {
+                const d = String(Math.floor(p.anyo / 10) * 10);
+                if (!sumaDecada[d]) sumaDecada[d] = { suma: 0, n: 0 };
+                sumaDecada[d].suma += (p.punt || 0);
+                sumaDecada[d].n++;
+            });
+            let mejorDecadaMedia = null;
+            Object.entries(sumaDecada).forEach(([d, o]) => {
+                if (o.n === 0) return;
+                const media = o.suma / o.n;
+                if (!mejorDecadaMedia || media > mejorDecadaMedia.media) {
+                    mejorDecadaMedia = { decada: d, media };
+                }
+            });
+
+            cardsWrap.appendChild(crearCard(total, 'Series'));
+            cardsWrap.appendChild(crearCard(notaMedia.toFixed(2), 'Nota media', '/ 10'));
+            cardsWrap.appendChild(crearCard(decadaFav[0] + 's', 'Década favorita', `${decadaFav[1]} series`));
+            cardsWrap.appendChild(crearCard(
+                mejorDecadaMedia ? mejorDecadaMedia.decada + 's' : '—',
+                'Mejor nota media',
+                mejorDecadaMedia ? `${mejorDecadaMedia.media.toFixed(2)} / 10` : ''
+            ));
+
+            /* ── Gráfico: series por década ── */
+            const chartDecadas = document.getElementById('chart-decadas');
+            const maxDecada = Math.max(...Object.values(countDecada));
+            DECADAS.slice().reverse().forEach(d => {
+                chartDecadas.appendChild(crearBarra(d + 's', countDecada[d], maxDecada));
+            });
+
+            /* ── Gráfico: nota media por década ── */
+            const chartMediaDecada = document.getElementById('chart-media-decada');
+            DECADAS.slice().reverse().forEach(d => {
+                const o = sumaDecada[d];
+                if (o.n === 0) return;
+                const media = o.suma / o.n;
+                chartMediaDecada.appendChild(crearBarra(d + 's', media.toFixed(2), 10));
+            });
+
+            /* ── Gráfico: distribución de puntuaciones ── */
+            const chartPunts = document.getElementById('chart-punts');
+            const countPunt = {};
+            for (let i = 0; i <= 10; i++) countPunt[i] = 0;
+            todas.forEach(p => { countPunt[p.punt] = (countPunt[p.punt] || 0) + 1; });
+            const maxPunt = Math.max(...Object.values(countPunt));
+            for (let i = 10; i >= 1; i--) {
+                chartPunts.appendChild(crearBarra('⭐ ' + i, countPunt[i], maxPunt));
+            }
+        }
+
+        cargarStats();
+    </script>
+</body>
+</html>

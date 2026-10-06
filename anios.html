@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Años | Serser</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <div class="btn-titulo"><a href="index.html">📅 Años</a></div>
+
+    <div class="barra-nav-container">
+        <button class="scroll-btn left">&#11207;</button>
+        <div id="barra" class="barra-nav-scroll"></div>
+        <button class="scroll-btn right">&#11208;</button>
+    </div>
+
+    <div id="bloques"></div>
+
+    <div class="btn-volver"><a href="index.html">Menú</a></div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <img id="modal-img" alt="">
+        </div>
+    </div>
+
+    <script src="js/posters.js"></script>
+    <script>
+        const ANIO_INICIO  = 1980;
+        const ANIO_FIN     = 2026;
+        const DEFAULT_ANIO = 2026;
+
+        function decadaDe(anio) { return String(Math.floor(anio / 10) * 10); }
+
+        function getAnio() {
+            const p = parseInt(new URLSearchParams(window.location.search).get('a'));
+            return (p >= ANIO_INICIO && p <= ANIO_FIN) ? p : DEFAULT_ANIO;
+        }
+
+        function construirBarra(activo) {
+            const barra = document.getElementById('barra');
+            barra.innerHTML = '';
+            for (let a = ANIO_FIN; a >= ANIO_INICIO; a--) {
+                const btn = document.createElement('button');
+                btn.textContent = a;
+                if (a === activo) btn.classList.add('activo');
+                btn.addEventListener('click', () => {
+                    history.pushState(null, '', `?a=${a}`);
+                    cargarAnio(a);
+                    barra.querySelectorAll('button').forEach(b => b.classList.remove('activo'));
+                    btn.classList.add('activo');
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                });
+                barra.appendChild(btn);
+            }
+            setTimeout(() => {
+                barra.querySelector('button.activo')
+                    ?.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
+            }, 0);
+        }
+
+        async function cargarAnio(anio) {
+            const decada = decadaDe(anio);
+            try {
+                const res  = await fetch(`json/${decada}.json`);
+                const data = await res.json();
+                const del_anio = data.filter(s => s.anyo === anio && s.punt >= 5);
+
+                const BLOQUES_DEF = [
+                    { punt: 10, titulo: '★★★★★  10' },
+                    { punt: 9,  titulo: '★★★★½   9' },
+                    { punt: 8,  titulo: '★★★★    8' },
+                    { punt: 7,  titulo: '★★★½    7' },
+                    { punt: 6,  titulo: '★★★     6' },
+                    { punt: 5,  titulo: '★★½     5' },
+                ];
+
+                renderBloques(
+                    BLOQUES_DEF
+                        .map(b => ({ titulo: b.titulo, lista: del_anio.filter(s => s.punt === b.punt) }))
+                        .filter(b => b.lista.length > 0),
+                    'bloques'
+                );
+
+                let dataBajas = [];
+                try {
+                    const resB = await fetch(`json_bajas/${decada}.json`);
+                    dataBajas = await resB.json();
+                } catch (e) { /* década sin json_bajas */ }
+                const del_anio_bajas = dataBajas.filter(s => s.anyo === anio);
+
+                const BLOQUES_BAJAS_DEF = [
+                    { punt: 4, titulo: '★★    4' },
+                    { punt: 3, titulo: '★½    3' },
+                    { punt: 2, titulo: '★     2' },
+                    { punt: 1, titulo: '½     1' },
+                ];
+
+                renderBloquesTexto(
+                    BLOQUES_BAJAS_DEF
+                        .map(b => ({ titulo: b.titulo, lista: del_anio_bajas.filter(s => s.punt === b.punt) }))
+                        .filter(b => b.lista.length > 0),
+                    'bloques',
+                    true
+                );
+            } catch(e) {
+                document.getElementById('bloques').innerHTML =
+                    '<p class="vacio">No se pudieron cargar las series.</p>';
+            }
+        }
+
+        const anioActual = getAnio();
+        construirBarra(anioActual);
+        cargarAnio(anioActual);
+    </script>
+</body>
+</html>

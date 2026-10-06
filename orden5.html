@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordena estas 5 | Serser</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        .o5-intro {
+            width: 900px; max-width: 90%;
+            margin: .5rem auto 1rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: .9rem;
+        }
+        .o5-marcador {
+            text-align: center;
+            font-size: .85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+            min-height: 1.3em;
+        }
+        .o5-marcador b { color: var(--accent); }
+
+        .o5-fila {
+            width: 900px; max-width: 95%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .o5-carta {
+            display: flex; flex-direction: column; align-items: center; gap: .5rem;
+            width: 150px;
+        }
+        .o5-poster-wrap {
+            width: 150px;
+            aspect-ratio: 2/3;
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-card);
+            cursor: pointer;
+            box-shadow: 0 0 0 1px rgba(255,255,255,.2);
+            transition: box-shadow .2s ease, scale .15s ease;
+        }
+        .o5-poster-wrap:hover { box-shadow: 0 0 0 2px var(--accent); }
+        .o5-poster-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .o5-poster-skeleton {
+            position: absolute; inset: 0;
+            background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-hover) 50%, var(--bg-card) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+        }
+        .o5-badge {
+            position: absolute; top: 6px; left: 6px;
+            width: 28px; height: 28px;
+            background: var(--accent);
+            color: #14181C;
+            border-radius: 50%;
+            display: none;
+            align-items: center; justify-content: center;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,.5);
+        }
+        .o5-carta.elegida .o5-poster-wrap { scale: .96; }
+        .o5-carta.elegida .o5-badge { display: flex; }
+
+        .o5-carta.correcta .o5-poster-wrap  { box-shadow: 0 0 0 3px var(--accent); }
+        .o5-carta.incorrecta .o5-poster-wrap { box-shadow: 0 0 0 3px #e05a5a; }
+
+        .o5-nombre { font-size: .78rem; font-weight: 700; text-align: center; min-height: 1.3em; }
+        .o5-nota { font-size: .78rem; color: var(--text-muted); min-height: 1.1em; }
+
+        .o5-acciones {
+            width: 900px; max-width: 90%;
+            margin: 0 auto 2rem;
+            display: flex; justify-content: center; gap: 1rem;
+        }
+        .o5-acciones button {
+            padding: .8rem 1.6rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: var(--radius);
+            font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .88rem;
+            cursor: pointer; transition: var(--tr);
+        }
+        .o5-acciones button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+        .o5-acciones button:disabled { opacity: .35; cursor: not-allowed; }
+        .o5-acciones .btn-siguiente {
+            background: var(--accent); color: #1a1a1a; border: none; display: none;
+        }
+        .o5-acciones .btn-siguiente.visible { display: inline-block; }
+        .o5-acciones .btn-siguiente:hover { background: var(--accent-h); }
+
+        @media (max-width: 640px) {
+            .o5-carta { width: 100px; }
+            .o5-poster-wrap { width: 100px; }
+            .o5-fila { gap: .6rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="btn-titulo"><a href="index.html">🔢 Ordena estas 5</a></div>
+    <p class="o5-intro">
+        Toca los pósters en orden, del que más nota le pusiste al que menos. Cuando toques los 5 se revela
+        el resultado y cuántos aciertos has clavado en su posición exacta.
+    </p>
+    <div class="o5-marcador" id="marcador"></div>
+
+    <div class="o5-fila" id="fila"></div>
+
+    <div class="o5-acciones">
+        <button id="btn-reiniciar">↺ Reiniciar selección</button>
+        <button class="btn-siguiente" id="btn-siguiente">Nueva ronda →</button>
+    </div>
+
+    <div class="btn-volver"><a href="index.html">Menú</a></div>
+
+    <script>
+        const DECADAS = ['1980','1990','2000','2010','2020'];
+
+        let _todas   = [];
+        let _ronda   = [];   // las 5 series de esta ronda (orden visual, mezclado)
+        let _elegido = [];   // índices (dentro de _ronda) en el orden que el usuario ha tocado
+        let _rondas  = 0;
+        let _aciertosTotales = 0;
+        let _resuelto = false;
+
+        function actualizarMarcador() {
+            document.getElementById('marcador').innerHTML =
+                _rondas === 0
+                    ? 'Toca las series de mejor a peor nota'
+                    : `Ronda ${_rondas} · <b>${_aciertosTotales}</b> aciertos de posición en total`;
+        }
+
+        function cargarImg(imgEl, skelEl, src) {
+            imgEl.style.opacity = '0';
+            skelEl.style.display = 'block';
+            if (!src) { skelEl.style.display = 'none'; return; }
+            const tmp = new Image();
+            tmp.onload  = () => { imgEl.src = src; skelEl.style.display = 'none'; imgEl.style.opacity = '1'; };
+            tmp.onerror = () => { skelEl.style.display = 'none'; };
+            tmp.src = src;
+        }
+
+        function pintarFila() {
+            const fila = document.getElementById('fila');
+            fila.innerHTML = '';
+
+            _ronda.forEach((peli, idx) => {
+                const carta = document.createElement('div');
+                carta.className = 'o5-carta';
+                carta.dataset.idx = idx;
+
+                carta.innerHTML = `
+                    <div class="o5-poster-wrap">
+                        <div class="o5-poster-skeleton"></div>
+                        <img alt="" style="opacity:0;">
+                        <div class="o5-badge"></div>
+                    </div>
+                    <div class="o5-nombre">${peli.tit || ''}</div>
+                    <div class="o5-nota"></div>
+                `;
+                cargarImg(carta.querySelector('img'), carta.querySelector('.o5-poster-skeleton'), peli.img);
+
+                carta.addEventListener('click', () => elegir(idx));
+                fila.appendChild(carta);
+            });
+        }
+
+        function elegir(idx) {
+            if (_resuelto) return;
+            if (_elegido.includes(idx)) return;
+            _elegido.push(idx);
+
+            const carta = document.querySelector(`.o5-carta[data-idx="${idx}"]`);
+            carta.classList.add('elegida');
+            carta.querySelector('.o5-badge').textContent = _elegido.length;
+
+            if (_elegido.length === _ronda.length) resolver();
+        }
+
+        function resolver() {
+            _resuelto = true;
+            _rondas++;
+
+            // orden correcto: de mayor a menor punt
+            const correctoPunts = [..._ronda].map(p => p.punt).sort((a, b) => b - a);
+
+            let aciertos = 0;
+            _elegido.forEach((idxRonda, posicion) => {
+                const peli = _ronda[idxRonda];
+                const carta = document.querySelector(`.o5-carta[data-idx="${idxRonda}"]`);
+                carta.querySelector('.o5-nota').textContent = `${peli.punt}/10`;
+
+                const acierto = peli.punt === correctoPunts[posicion];
+                if (acierto) aciertos++;
+                carta.classList.add(acierto ? 'correcta' : 'incorrecta');
+            });
+
+            _aciertosTotales += aciertos;
+            document.getElementById('marcador').innerHTML =
+                `Ronda ${_rondas} · <b>${aciertos}/5</b> en su posición exacta esta vez · <b>${_aciertosTotales}</b> en total`;
+
+            document.getElementById('btn-reiniciar').disabled = true;
+            document.getElementById('btn-siguiente').classList.add('visible');
+        }
+
+        function reiniciarSeleccion() {
+            if (_resuelto) return;
+            _elegido = [];
+            document.querySelectorAll('.o5-carta').forEach(c => {
+                c.classList.remove('elegida', 'correcta', 'incorrecta');
+                c.querySelector('.o5-badge').textContent = '';
+                c.querySelector('.o5-nota').textContent = '';
+            });
+        }
+
+        function nuevaRonda() {
+            _elegido = [];
+            _resuelto = false;
+            document.getElementById('btn-reiniciar').disabled = false;
+            document.getElementById('btn-siguiente').classList.remove('visible');
+
+            const barajadas = [..._todas].sort(() => Math.random() - .5);
+            _ronda = barajadas.slice(0, 5);
+            pintarFila();
+            actualizarMarcador();
+        }
+
+        document.getElementById('btn-reiniciar').addEventListener('click', reiniciarSeleccion);
+        document.getElementById('btn-siguiente').addEventListener('click', nuevaRonda);
+
+        async function init() {
+            const fetches = DECADAS.map(d =>
+                fetch(`json/${d}.json`).then(r => r.json()).catch(() => []));
+            _todas = (await Promise.all(fetches)).flat();
+            nuevaRonda();
+        }
+        init();
+    </script>
+</body>
+</html>

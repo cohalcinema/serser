@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azar | Serser</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        /* ── LAYOUT AZAR ─────────────────────────── */
+        .azar-wrap {
+            width: 900px; max-width: 90%;
+            margin: 1rem auto 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* ── PANEL FILTROS ───────────────────────── */
+        .azar-filtros {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.8rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.6rem;
+        }
+        .filtro-grupo label {
+            display: block;
+            font-size: .8rem;
+            font-weight: 700;
+            letter-spacing: .1em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: .7rem;
+        }
+        .filtro-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+        }
+        .filtro-chips button {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            border-radius: 8px;
+            padding: .35rem .75rem;
+            font-size: .85rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--tr);
+        }
+        .filtro-chips button:hover {
+            border-color: var(--accent);
+            color: var(--text);
+        }
+        .filtro-chips button.sel {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(0,224,84,.08);
+        }
+        .filtro-chips button.sel-todas {
+            border-color: var(--accent);
+            color: #1a1a1a;
+            background: var(--accent);
+        }
+
+        .btn-sortear {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: #1a1a1a;
+            border: none;
+            border-radius: var(--radius);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: .15em;
+            cursor: pointer;
+            transition: var(--tr);
+            margin-top: .4rem;
+        }
+        .btn-sortear:hover {
+            background: var(--accent-h);
+            scale: .97;
+        }
+        .btn-sortear:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+            scale: 1;
+        }
+
+        /* ── PANEL POSTER ────────────────────────── */
+        .azar-resultado {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .azar-poster-wrap {
+            width: 65%;
+            aspect-ratio: 2/3;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: var(--tr);
+        }
+        .azar-poster-wrap:hover {
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        .azar-poster-wrap img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            position: relative; z-index: 1;
+            transition: opacity .4s ease;
+        }
+        .azar-poster-placeholder {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: .8rem;
+            color: var(--text-muted);
+            font-size: .85rem;
+            text-align: center;
+            padding: 1.5rem;
+        }
+        .azar-poster-placeholder .icono {
+            font-size: 2.5rem;
+            opacity: .4;
+        }
+        .azar-poster-skeleton {
+            position: absolute; inset: 0;
+            background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-hover) 50%, var(--bg-card) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            z-index: 2;
+            display: none;
+        }
+        .azar-titulo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: .1em;
+            color: var(--text);
+            text-align: center;
+            min-height: 1.6rem;
+        }
+        .azar-meta {
+            font-size: .82rem;
+            color: var(--text-muted);
+            text-align: center;
+            min-height: 1.2rem;
+        }
+        .azar-conteo {
+            font-size: .78rem;
+            color: var(--text-muted);
+            text-align: center;
+            opacity: .7;
+        }
+
+        /* ── RESPONSIVE ──────────────────────────── */
+        @media (max-width: 640px) {
+            .azar-wrap {
+                grid-template-columns: 1fr;
+            }
+            .azar-resultado {
+                order: -1;
+            }
+            .azar-poster-wrap {
+                width: 55vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="btn-titulo"><a href="index.html">🎲 Azar</a></div>
+
+    <div class="azar-wrap">
+
+        <!-- FILTROS -->
+        <div class="azar-filtros">
+
+            <div class="filtro-grupo">
+                <label>Década</label>
+                <div class="filtro-chips" id="chips-decada"></div>
+            </div>
+
+            <div class="filtro-grupo">
+                <label>Puntuación</label>
+                <div class="filtro-chips" id="chips-punt"></div>
+            </div>
+
+            <button class="btn-sortear" id="btn-sortear" disabled>
+                Sortear serie
+            </button>
+            <div class="azar-conteo" id="conteo"></div>
+
+        </div>
+
+        <!-- RESULTADO -->
+        <div class="azar-resultado">
+            <div class="azar-poster-wrap" id="poster-wrap">
+                <div class="azar-poster-skeleton" id="skeleton"></div>
+                <div class="azar-poster-placeholder" id="placeholder">
+                    <span class="icono">📺</span>
+                    <span>Selecciona filtros<br>y sortea una serie</span>
+                </div>
+                <img id="poster-img" src="" alt="" style="opacity:0;">
+            </div>
+            <div class="azar-titulo" id="peli-titulo"></div>
+            <div class="azar-meta" id="peli-meta"></div>
+        </div>
+
+    </div>
+
+    <div class="btn-volver"><a href="index.html">Menú</a></div>
+
+    <!-- Modal requerido por posters.js -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <img id="modal-img" alt="">
+        </div>
+    </div>
+
+    <script src="js/posters.js"></script>
+    <script>
+        const DECADAS      = ['2020','2010','2000','1990','1980'];
+        const PUNTUACIONES = [10, 9, 8, 7, 6, 5];
+        const ESTRELLAS    = { 10: '★★★★★', 9: '★★★★½', 8: '★★★★', 7: '★★★½', 6: '★★★', 5: '★★½' };
+
+        let _todas      = [];
+        let _selDecadas = new Set();
+        let _selPunts   = new Set();
+        let _peliActual = null;
+        let _cargando   = true;
+
+        /* ── CHIPS ──────────────────────────────── */
+        function buildChips(containerId, items, labelFn, selSet, callback) {
+            const wrap = document.getElementById(containerId);
+            wrap.innerHTML = '';
+
+            const btnTodas = document.createElement('button');
+            btnTodas.textContent = 'Todas';
+            btnTodas.classList.add('sel-todas');
+            btnTodas.addEventListener('click', () => {
+                selSet.clear();
+                wrap.querySelectorAll('button').forEach(b => b.classList.remove('sel', 'sel-todas'));
+                btnTodas.classList.add('sel-todas');
+                callback();
+            });
+            wrap.appendChild(btnTodas);
+
+            items.forEach(item => {
+                const key = String(item);
+                const btn = document.createElement('button');
+                btn.textContent = labelFn(item);
+                btn.addEventListener('click', () => {
+                    if (selSet.has(key)) {
+                        selSet.delete(key);
+                        btn.classList.remove('sel');
+                    } else {
+                        selSet.add(key);
+                        btn.classList.add('sel');
+                    }
+                    if (selSet.size === 0) {
+                        btnTodas.classList.add('sel-todas');
+                    } else {
+                        btnTodas.classList.remove('sel-todas');
+                    }
+                    callback();
+                });
+                wrap.appendChild(btn);
+            });
+        }
+
+        /* ── FILTRADO ───────────────────────────── */
+        function filtradas() {
+            return _todas.filter(s => {
+                const decadaSerie = String(Math.floor(s.anyo / 10) * 10);
+                const okDecada    = _selDecadas.size === 0 || _selDecadas.has(decadaSerie);
+                const okPunt      = _selPunts.size === 0 || _selPunts.has(String(s.punt));
+                return okDecada && okPunt;
+            });
+        }
+
+        function actualizarConteo() {
+            const n   = filtradas().length;
+            const btn = document.getElementById('btn-sortear');
+            const cnt = document.getElementById('conteo');
+
+            if (_cargando) {
+                cnt.textContent = 'Cargando series…';
+                btn.disabled    = true;
+            } else if (n === 0) {
+                cnt.textContent = 'Ninguna serie cumple los filtros';
+                btn.disabled    = true;
+            } else {
+                cnt.textContent = `${n} serie${n !== 1 ? 's' : ''} disponible${n !== 1 ? 's' : ''}`;
+                btn.disabled    = false;
+            }
+        }
+
+        /* ── SORTEO ─────────────────────────────── */
+        function sortear() {
+            const lista = filtradas();
+            if (!lista.length) return;
+
+            let candidatas = lista.length > 1 && _peliActual
+                ? lista.filter(s => s !== _peliActual)
+                : lista;
+
+            _peliActual = candidatas[Math.floor(Math.random() * candidatas.length)];
+            mostrarSerie(_peliActual);
+        }
+
+        function mostrarSerie(serie) {
+            const wrap   = document.getElementById('poster-wrap');
+            const img    = document.getElementById('poster-img');
+            const skel   = document.getElementById('skeleton');
+            const ph     = document.getElementById('placeholder');
+            const titulo = document.getElementById('peli-titulo');
+            const meta   = document.getElementById('peli-meta');
+
+            ph.style.display   = 'none';
+            img.style.opacity  = '0';
+            skel.style.display = 'block';
+
+            titulo.textContent = serie.tit || '';
+            meta.textContent   = `${ESTRELLAS[serie.punt] || ''}  ${serie.punt}/10  ·  ${serie.anyo}`;
+
+            wrap.onclick = () => {
+                sessionStorage.setItem('cinser_peli', JSON.stringify(serie));
+                sessionStorage.setItem('cinser_back', window.location.href);
+                sessionStorage.setItem('cinser_scroll', '0');
+                window.location.href = 'pelicula.html';
+            };
+
+            if (serie.img) {
+                const tmp = new Image();
+                tmp.onload  = () => {
+                    img.src            = serie.img;
+                    img.alt            = serie.tit || '';
+                    skel.style.display = 'none';
+                    img.style.opacity  = '1';
+                };
+                tmp.onerror = () => { skel.style.display = 'none'; };
+                tmp.src = serie.img;
+            } else {
+                skel.style.display = 'none';
+            }
+        }
+
+        /* ── CARGA ──────────────────────────────── */
+        async function cargarTodo() {
+            const fetches = DECADAS.map(d =>
+                fetch(`json/${d}.json`).then(r => r.json()).catch(() => []));
+            _todas    = (await Promise.all(fetches)).flat();
+            _cargando = false;
+            actualizarConteo();
+        }
+
+        /* ── INIT ───────────────────────────────── */
+        buildChips('chips-decada', DECADAS,      d => d + 's',    _selDecadas, actualizarConteo);
+        buildChips('chips-punt',   PUNTUACIONES, p => `⭐ ${p}`,  _selPunts,   actualizarConteo);
+
+        document.getElementById('btn-sortear').addEventListener('click', sortear);
+
+        actualizarConteo();
+        cargarTodo();
+    </script>
+</body>
+</html>
