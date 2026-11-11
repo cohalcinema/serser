@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serser</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <img src="logo-cohal-cinema.png" alt="Logo" class="logo">
+    <h1 class="site-title">SERSER</h1>
+
+    <div class="menu-wrap">
+        <div>
+            <div class="menu-seccion-titulo">Explorar</div>
+            <div class="menu-grid">
+                <a class="menu-card" href="puntuacion.html"><span class="menu-icono">⭐</span>Puntuación</a>
+                <a class="menu-card" href="anios.html"><span class="menu-icono">📅</span>Años</a>
+                <a class="menu-card" href="buscar.html"><span class="menu-icono">🔍</span>Buscar</a>
+                <a class="menu-card" href="sorpresa.html"><span class="menu-icono">🎁</span>Sorpresa</a>
+            </div>
+        </div>
+        <div>
+            <div class="menu-seccion-titulo">Jugar</div>
+            <div class="menu-grid">
+                <a class="menu-card" href="azar.html"><span class="menu-icono">🎲</span>Azar</a>
+                <a class="menu-card" href="mayor-menor.html"><span class="menu-icono">⚖️</span>Mayor o menor</a>
+                <a class="menu-card" href="que-anyo.html"><span class="menu-icono">🗓️</span>¿Qué año es?</a>
+                <a class="menu-card" href="orden5.html"><span class="menu-icono">🔢</span>Ordena estas 5</a>
+            </div>
+        </div>
+        <a class="menu-card-full" href="stats.html"><span class="menu-icono">📊</span>Stats</a>
+    </div>
+    <script>
+        /* ── Transición suave entre páginas ── */
+        document.addEventListener('click', e => {
+            const a = e.target.closest('a[href]');
+            if (!a) return;
+            const href = a.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('http') || a.target === '_blank') return;
+            e.preventDefault();
+            document.body.classList.add('fade-out');
+            setTimeout(() => { window.location.href = href; }, 180);
+        });
+    </script>
+</body>
+</html>

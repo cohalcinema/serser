@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Décadas | Serser</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <div class="btn-titulo"><a href="index.html">📅 Décadas</a></div>
+
+    <div class="barra-nav-container">
+        <button class="scroll-btn left">&#11207;</button>
+        <div id="barra" class="barra-nav-scroll"></div>
+        <button class="scroll-btn right">&#11208;</button>
+    </div>
+
+    <div id="bloques"></div>
+
+    <div class="btn-volver"><a href="index.html">Menú</a></div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <img id="modal-img" alt="">
+        </div>
+    </div>
+
+    <script src="js/posters.js"></script>
+    <script>
+        const DECADAS      = ['2020','2010','2000','1990','1980'];
+        const DEFAULT_DEC  = '2020';
+
+        function getDecada() {
+            const p = new URLSearchParams(window.location.search).get('d');
+            return DECADAS.includes(p) ? p : DEFAULT_DEC;
+        }
+
+        function construirBarra(activa) {
+            const barra = document.getElementById('barra');
+            barra.innerHTML = '';
+            DECADAS.forEach(d => {
+                const btn = document.createElement('button');
+                btn.textContent = d + 's';
+                if (d === activa) btn.classList.add('activo');
+                btn.addEventListener('click', () => {
+                    history.pushState(null, '', `?d=${d}`);
+                    cargarDecada(d);
+                    barra.querySelectorAll('button').forEach(b => b.classList.remove('activo'));
+                    btn.classList.add('activo');
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                });
+                barra.appendChild(btn);
+            });
+            setTimeout(() => {
+                barra.querySelector('button.activo')
+                    ?.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
+            }, 0);
+        }
+
+        async function cargarDecada(decada) {
+            try {
+                const res  = await fetch(`json/${decada}.json`);
+                const data = await res.json();
+                const con_punt = data.filter(s => s.punt >= 5);
+
+                const BLOQUES_DEF = [
+                    { punt: 10, titulo: '★★★★★  10' },
+                    { punt: 9,  titulo: '★★★★½   9' },
+                    { punt: 8,  titulo: '★★★★    8' },
+                    { punt: 7,  titulo: '★★★½    7' },
+                    { punt: 6,  titulo: '★★★     6' },
+                    { punt: 5,  titulo: '★★½     5' },
+                ];
+
+                renderBloques(
+                    BLOQUES_DEF
+                        .map(b => ({ titulo: b.titulo, lista: con_punt.filter(s => s.punt === b.punt) }))
+                        .filter(b => b.lista.length > 0),
+                    'bloques'
+                );
+
+                let dataBajas = [];
+                try {
+                    const resB = await fetch(`json_bajas/${decada}.json`);
+                    dataBajas = await resB.json();
+                } catch (e) { /* década sin json_bajas */ }
+
+                const BLOQUES_BAJAS_DEF = [
+                    { punt: 4, titulo: '★★    4' },
+                    { punt: 3, titulo: '★½    3' },
+                    { punt: 2, titulo: '★     2' },
+                    { punt: 1, titulo: '½     1' },
+                ];
+
+                renderBloquesTexto(
+                    BLOQUES_BAJAS_DEF
+                        .map(b => ({ titulo: b.titulo, lista: dataBajas.filter(s => s.punt === b.punt) }))
+                        .filter(b => b.lista.length > 0),
+                    'bloques',
+                    true
+                );
+            } catch(e) {
+                document.getElementById('bloques').innerHTML =
+                    '<p class="vacio">No se pudieron cargar las series.</p>';
+            }
+        }
+
+        const decadaActual = getDecada();
+        construirBarra(decadaActual);
+        cargarDecada(decadaActual);
+    </script>
+</body>
+</html>

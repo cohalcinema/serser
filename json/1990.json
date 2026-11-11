@@ -1,0 +1,26 @@
+[
+  {
+    "tit": "The New Batman Adventures",
+    "anyo": 1997,
+    "punt": 7,
+    "img": "https://image.tmdb.org/t/p/original/s40Ji11SBKaEYDgJmDc0ifklM59.jpg"
+  },
+  {
+    "tit": "Superman: The Animated Series",
+    "anyo": 1996,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/7O9fuonA2A9PH1npG5Lf6oEdgRL.jpg"
+  },
+  {
+    "tit": "Batman: The Animated Series",
+    "anyo": 1992,
+    "punt": 10,
+    "img": "https://image.tmdb.org/t/p/original/deTS2YTB2YXEVDghIxaaDWcFZJx.jpg"
+  },
+  {
+    "tit": "Twin Peaks",
+    "anyo": 1990,
+    "punt": 10,
+    "img": "https://image.tmdb.org/t/p/original/kfGlKqHRukOib8PnNUlam8r5aLi.jpg"
+  }
+]

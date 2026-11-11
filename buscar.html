@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar | Serser</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        .buscar-wrap {
+            width: 900px; max-width: 90%;
+            margin: .5rem auto 1.5rem;
+        }
+        .buscar-input {
+            width: 100%;
+            padding: .9rem 1.1rem;
+            font-size: 1.05rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            color: var(--text);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            outline: none;
+            transition: var(--tr);
+        }
+        .buscar-input::placeholder { color: var(--text-muted); }
+        .buscar-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(0,224,84,.15); }
+        .buscar-ayuda {
+            width: 900px; max-width: 90%;
+            margin: 2rem auto; text-align: center;
+            color: var(--text-muted); font-size: .95rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="btn-titulo"><a href="index.html">🔍 Buscar</a></div>
+
+    <div class="buscar-wrap">
+        <input type="text" id="buscar-input" class="buscar-input"
+               placeholder="Escribe el título de una serie..." autocomplete="off">
+    </div>
+
+    <div id="bloques"></div>
+
+    <div class="btn-volver"><a href="index.html">Menú</a></div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <img id="modal-img" alt="">
+        </div>
+    </div>
+
+    <script src="js/posters.js"></script>
+    <script>
+        const DECADAS = ['1980','1990','2000','2010','2020'];
+
+        let _todas      = [];
+        let _todasBajas = [];
+        let _cargado    = false;
+
+        async function cargarCatalogo() {
+            const fetchesAltas = DECADAS.map(d =>
+                fetch(`json/${d}.json`).then(r => r.json()).catch(() => []));
+            const fetchesBajas = DECADAS.map(d =>
+                fetch(`json_bajas/${d}.json`).then(r => r.json()).catch(() => []));
+            _todas      = (await Promise.all(fetchesAltas)).flat();
+            _todasBajas = (await Promise.all(fetchesBajas)).flat();
+            _cargado = true;
+        }
+
+        function mostrarResultados(q) {
+            const bloquesEl = document.getElementById('bloques');
+            const query = q.trim().toLowerCase();
+
+            if (!query) {
+                bloquesEl.innerHTML = '';
+                return;
+            }
+
+            const matchAltas = _todas.filter(p => (p.tit || '').toLowerCase().includes(query));
+            const matchBajas = _todasBajas.filter(p => (p.tit || '').toLowerCase().includes(query));
+
+            if (!matchAltas.length && !matchBajas.length) {
+                bloquesEl.innerHTML = '<p class="vacio">No se encontraron series.</p>';
+                return;
+            }
+
+            renderBloques(
+                matchAltas.length ? [{ titulo: 'Resultados', lista: matchAltas }] : [],
+                'bloques'
+            );
+            renderBloquesTexto(
+                matchBajas.length
+                    ? [{ titulo: matchAltas.length ? 'Resultados (sin póster)' : 'Resultados', lista: matchBajas }]
+                    : [],
+                'bloques',
+                true
+            );
+        }
+
+        const input = document.getElementById('buscar-input');
+        input.addEventListener('input', () => mostrarResultados(input.value));
+
+        cargarCatalogo();
+        input.focus();
+    </script>
+
+    <script>
+        /* ── Transición suave entre páginas ── */
+        document.addEventListener('click', e => {
+            const a = e.target.closest('a[href]');
+            if (!a) return;
+            const href = a.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('http') || a.target === '_blank') return;
+            e.preventDefault();
+            document.body.classList.add('fade-out');
+            setTimeout(() => { window.location.href = href; }, 180);
+        });
+    </script>
+</body>
+</html>

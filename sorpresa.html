@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorpresa | Serser</title>
+    <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        .sorpresa-msg {
+            width: 100%; min-height: 70vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: .6rem; text-align: center;
+        }
+        .sorpresa-msg .emoji { font-size: 3rem; }
+        .sorpresa-msg .txt {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.4rem; letter-spacing: .1em;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="sorpresa-msg">
+        <div class="emoji">🎁</div>
+        <div class="txt">Buscando una sorpresa…</div>
+    </div>
+
+    <script>
+        const DECADAS = ['1980','1990','2000','2010','2020'];
+
+        async function irASorpresa() {
+            const fetches = DECADAS.map(d =>
+                fetch(`json/${d}.json`).then(r => r.json()).catch(() => []));
+            const todas = (await Promise.all(fetches)).flat();
+
+            if (!todas.length) {
+                document.querySelector('.txt').textContent = 'No hay series todavía.';
+                return;
+            }
+
+            const elegida = todas[Math.floor(Math.random() * todas.length)];
+            sessionStorage.setItem('cinser_peli', JSON.stringify(elegida));
+            sessionStorage.setItem('cinser_back', 'index.html');
+            sessionStorage.removeItem('cinser_scroll');
+
+            document.body.classList.add('fade-out');
+            setTimeout(() => { window.location.href = 'pelicula.html'; }, 180);
+        }
+
+        irASorpresa();
+    </script>
+</body>
+</html>

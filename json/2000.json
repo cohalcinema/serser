@@ -1,0 +1,56 @@
+[
+  {
+    "tit": "Star Wars: The Clone Wars",
+    "anyo": 2008,
+    "punt": 7,
+    "img": "https://image.tmdb.org/t/p/original/kkmtkFC5TDqOaN9dnZTm6gFRznW.jpg"
+  },
+  {
+    "tit": "Fringe",
+    "anyo": 2008,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/FFoWiVNs7aK6UImSoEwhAxrKCE.jpg"
+  },
+  {
+    "tit": "The Spectacular Spider-Man",
+    "anyo": 2008,
+    "punt": 10,
+    "img": "https://image.tmdb.org/t/p/original/tCDkZnkjVegQTy5JgSLgCldayr8.jpg"
+  },
+  {
+    "tit": "Breaking Bad",
+    "anyo": 2008,
+    "punt": 10,
+    "img": "https://image.tmdb.org/t/p/original/ineLOBPG8AZsluYwnkMpHRyu7L.jpg"
+  },
+  {
+    "tit": "La que se avecina",
+    "anyo": 2007,
+    "punt": 7,
+    "img": "https://image.tmdb.org/t/p/original/6XfpCyeZ1f0DsiPpmmaO9nzaCjx.jpg"
+  },
+  {
+    "tit": "Death Note",
+    "anyo": 2006,
+    "punt": 9,
+    "img": "https://image.tmdb.org/t/p/original/qdNlRsnpr9yfmIJ76qQBM91E3dn.jpg"
+  },
+  {
+    "tit": "Prison Break",
+    "anyo": 2005,
+    "punt": 7,
+    "img": "https://image.tmdb.org/t/p/original/wnmNPaLvhnMeOqnWlhNkYCZxtda.jpg"
+  },
+  {
+    "tit": "Lost",
+    "anyo": 2004,
+    "punt": 8,
+    "img": "https://image.tmdb.org/t/p/original/og6S0aTZU6YUJAbqxeKjCa3kY1E.jpg"
+  },
+  {
+    "tit": "Los Serrano",
+    "anyo": 2003,
+    "punt": 9,
+    "img": "https://image.tmdb.org/t/p/original/w9hPecVLyCkbnJLLdjFu67URBZP.jpg"
+  }
+]
